@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart City — Safety</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f4f5f7; color: #1a1a1a; }
+.header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: #fff; border-bottom: 1px solid #e5e7eb; }
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon { width: 36px; height: 36px; border-radius: 8px; background: #1D9E75; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; }
+.logo-title { font-size: 16px; font-weight: 600; }
+.logo-sub { font-size: 12px; color: #6b7280; }
+.nav { display: flex; gap: 6px; padding: 0.75rem 1.5rem; background: #fff; border-bottom: 1px solid #e5e7eb; }
+.nav a { padding: 6px 16px; font-size: 13px; border-radius: 20px; border: 1px solid #e5e7eb; text-decoration: none; color: #6b7280; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+.nav a:hover { background: #f4f5f7; }
+.nav a.active { background: #1D9E75; color: #fff; border-color: #1D9E75; }
+.body { padding: 1.5rem; }
+.page-title { font-size: 20px; font-weight: 600; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 8px; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 1.5rem; }
+.metric-card { background: #fff; border-radius: 12px; padding: 1.25rem; border: 1px solid #e5e7eb; }
+.metric-label { font-size: 12px; color: #6b7280; margin-bottom: 8px; }
+.metric-value { font-size: 28px; font-weight: 700; }
+.metric-sub { font-size: 12px; color: #6b7280; margin-top: 4px; }
+.card { background: #fff; border-radius: 12px; padding: 1.25rem; border: 1px solid #e5e7eb; margin-bottom: 1rem; }
+.card-title { font-size: 14px; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.alert-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; background: #f9fafb; border: 1px solid #e5e7eb; font-size: 13px; }
+.alert-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.alert-text { flex: 1; }
+.alert-time { color: #9ca3af; font-size: 11px; }
+.cam-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cam-card { background: #f9fafb; border-radius: 8px; padding: 12px; border: 1px solid #e5e7eb; }
+.cam-name { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.cam-status { font-size: 11px; }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: #1D9E75; display: inline-block; margin-right: 4px; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon"><i class="ti ti-building-skyscraper"></i></div>
+    <div>
+      <div class="logo-title">Smart City Connect</div>
+      <div class="logo-sub">Public Safety Department</div>
+    </div>
+  </div>
+  <a href="/logout" style="font-size:13px;color:#6b7280;text-decoration:none;"><i class="ti ti-logout"></i> Logout</a>
+</div>
+
+<div class="nav">
+  <a href="/"><i class="ti ti-layout-dashboard"></i> Overview</a>
+  <a href="/transport"><i class="ti ti-bus"></i> Transportation</a>
+  <a href="/energy"><i class="ti ti-bolt"></i> Energy</a>
+  <a href="/waste"><i class="ti ti-recycle"></i> Waste</a>
+  <a href="/safety" class="active"><i class="ti ti-shield"></i> Safety</a>
+</div>
+
+<div class="body">
+  <div class="page-title"><i class="ti ti-shield" style="color:#1D9E75;font-size:22px;"></i> Public Safety Monitoring</div>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Active Alerts</div>
+      <div class="metric-value" id="m-alerts" style="color:#D85A30;">—</div>
+      <div class="metric-sub">Require attention</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Cameras Online</div>
+      <div class="metric-value" style="color:#1D9E75;">3 / 3</div>
+      <div class="metric-sub">All operational</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Response Teams</div>
+      <div class="metric-value" style="color:#1D9E75;">4</div>
+      <div class="metric-sub">On standby</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">System Status</div>
+      <div class="metric-value" style="color:#1D9E75;font-size:20px;">Active</div>
+      <div class="metric-sub">All sensors online</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-alert-triangle" style="color:#D85A30;"></i> Active Alerts <span id="alert-count" style="font-size:11px;padding:2px 8px;border-radius:20px;background:#FAECE7;color:#993C1D;margin-left:6px;"></span></div>
+      <div id="alerts-list">
+        <div class="alert-row"><div class="alert-dot" style="background:#D85A30;"></div><div class="alert-text">Traffic accident — District 4</div><div class="alert-time">2 min ago</div></div>
+        <div class="alert-row"><div class="alert-dot" style="background:#EF9F27;"></div><div class="alert-text">Street light outage — Zone B</div><div class="alert-time">18 min ago</div></div>
+        <div class="alert-row"><div class="alert-dot" style="background:#EF9F27;"></div><div class="alert-text">Noise complaint — Park area</div><div class="alert-time">34 min ago</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i class="ti ti-camera" style="color:#1D9E75;"></i> CCTV Cameras</div>
+      <div class="cam-grid">
+        <div class="cam-card">
+          <div class="cam-name"><span class="live-dot"></span>Camera 01</div>
+          <div class="cam-status" style="color:#1D9E75;">No motion detected</div>
+          <div style="font-size:10px;color:#6b7280;margin-top:4px;">Zone A — Main Street</div>
+        </div>
+        <div class="cam-card">
+          <div class="cam-name"><span class="live-dot"></span>Camera 02</div>
+          <div class="cam-status" id="cam2-status" style="color:#EF9F27;">Motion detected</div>
+          <div style="font-size:10px;color:#6b7280;margin-top:4px;">Zone B — Central Park</div>
+        </div>
+        <div class="cam-card">
+          <div class="cam-name"><span class="live-dot"></span>Camera 03</div>
+          <div class="cam-status" style="color:#1D9E75;">No motion detected</div>
+          <div style="font-size:10px;color:#6b7280;margin-top:4px;">Zone C — Market Square</div>
+        </div>
+        <div class="cam-card" style="background:#E1F5EE;">
+          <div class="cam-name" style="color:#1D9E75;">All Systems</div>
+          <div class="cam-status" style="color:#1D9E75;font-weight:600;">Online</div>
+          <div style="font-size:10px;color:#6b7280;margin-top:4px;">3 / 3 Active</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function fetchData() {
+  const res = await fetch('/api/data');
+  const data = await res.json();
+
+  const a = data.alerts;
+  document.getElementById('m-alerts').textContent = a;
+  document.getElementById('alert-count').textContent = a + ' active';
+}
+
+fetchData();
+setInterval(fetchData, 5000);
+</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart City — Waste</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f4f5f7; color: #1a1a1a; }
+.header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: #fff; border-bottom: 1px solid #e5e7eb; }
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon { width: 36px; height: 36px; border-radius: 8px; background: #1D9E75; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; }
+.logo-title { font-size: 16px; font-weight: 600; }
+.logo-sub { font-size: 12px; color: #6b7280; }
+.nav { display: flex; gap: 6px; padding: 0.75rem 1.5rem; background: #fff; border-bottom: 1px solid #e5e7eb; }
+.nav a { padding: 6px 16px; font-size: 13px; border-radius: 20px; border: 1px solid #e5e7eb; text-decoration: none; color: #6b7280; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+.nav a:hover { background: #f4f5f7; }
+.nav a.active { background: #1D9E75; color: #fff; border-color: #1D9E75; }
+.body { padding: 1.5rem; }
+.page-title { font-size: 20px; font-weight: 600; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 8px; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 1.5rem; }
+.metric-card { background: #fff; border-radius: 12px; padding: 1.25rem; border: 1px solid #e5e7eb; }
+.metric-label { font-size: 12px; color: #6b7280; margin-bottom: 8px; }
+.metric-value { font-size: 28px; font-weight: 700; }
+.metric-sub { font-size: 12px; color: #6b7280; margin-top: 4px; }
+.card { background: #fff; border-radius: 12px; padding: 1.25rem; border: 1px solid #e5e7eb; margin-bottom: 1rem; }
+.card-title { font-size: 14px; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.stat-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f4f5f7; font-size: 13px; }
+.stat-row:last-child { border-bottom: none; }
+.bin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; }
+.bin-card { background: #f9fafb; border-radius: 8px; padding: 10px; text-align: center; border: 1px solid #e5e7eb; }
+.bin-level { font-size: 18px; font-weight: 700; }
+.bin-name { font-size: 10px; color: #6b7280; margin-top: 2px; }
+.bin-status { font-size: 10px; font-weight: 600; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon"><i class="ti ti-building-skyscraper"></i></div>
+    <div>
+      <div class="logo-title">Smart City Connect</div>
+      <div class="logo-sub">Waste Management Department</div>
+    </div>
+  </div>
+  <a href="/logout" style="font-size:13px;color:#6b7280;text-decoration:none;"><i class="ti ti-logout"></i> Logout</a>
+</div>
+
+<div class="nav">
+  <a href="/"><i class="ti ti-layout-dashboard"></i> Overview</a>
+  <a href="/transport"><i class="ti ti-bus"></i> Transportation</a>
+  <a href="/energy"><i class="ti ti-bolt"></i> Energy</a>
+  <a href="/waste" class="active"><i class="ti ti-recycle"></i> Waste</a>
+  <a href="/safety"><i class="ti ti-shield"></i> Safety</a>
+</div>
+
+<div class="body">
+  <div class="page-title"><i class="ti ti-recycle" style="color:#1D9E75;font-size:22px;"></i> Waste Management</div>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Zones Covered</div>
+      <div class="metric-value" id="m-zones">—</div>
+      <div class="metric-sub">out of 10 zones</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Active Trucks</div>
+      <div class="metric-value" id="m-trucks">—</div>
+      <div class="metric-sub">on collection routes</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Full Bins</div>
+      <div class="metric-value" id="m-bins">—</div>
+      <div class="metric-sub">need collection</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Recycling Rate</div>
+      <div class="metric-value" id="m-recycle">—</div>
+      <div class="metric-sub">of total waste</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-info-circle" style="color:#1D9E75;"></i> Collection Status</div>
+      <div class="stat-row"><div style="color:#6b7280;">Schedule</div><div style="font-weight:600;color:#1D9E75;">On Schedule</div></div>
+      <div class="stat-row"><div style="color:#6b7280;">Zones Completed</div><div style="font-weight:600;" id="s-zones">—</div></div>
+      <div class="stat-row"><div style="color:#6b7280;">Trucks Active</div><div style="font-weight:600;" id="s-trucks">—</div></div>
+      <div class="stat-row"><div style="color:#6b7280;">Bins Needing Collection</div><div style="font-weight:600;color:#D85A30;" id="s-bins">—</div></div>
+      <div class="stat-row"><div style="color:#6b7280;">Recycling Rate</div><div style="font-weight:600;color:#1D9E75;" id="s-recycle">—</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i class="ti ti-trash" style="color:#1D9E75;"></i> Smart Bin Levels</div>
+      <div class="bin-grid" id="bin-grid">
+        <!-- bins loaded dynamically -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const binNames = ['Bin 01', 'Bin 02', 'Bin 03', 'Bin 04', 'Bin 05', 'Bin 06'];
+
+function renderBins(fullCount) {
+  const grid = document.getElementById('bin-grid');
+  grid.innerHTML = '';
+  binNames.forEach((name, i) => {
+    const level = i < fullCount ? Math.floor(Math.random() * 20 + 80) : Math.floor(Math.random() * 60 + 10);
+    const isFull = level > 80;
+    const color = isFull ? '#D85A30' : level > 50 ? '#EF9F27' : '#1D9E75';
+    grid.innerHTML += `<div class="bin-card">
+      <div class="bin-level" style="color:${color}">${level}%</div>
+      <div class="bin-name">${name}</div>
+      <div class="bin-status" style="color:${color}">${isFull ? 'FULL' : 'OK'}</div>
+    </div>`;
+  });
+}
+
+async function fetchData() {
+  const res = await fetch('/api/data');
+  const data = await res.json();
+
+  document.getElementById('m-zones').textContent = data.waste.zones + ' / 10';
+  document.getElementById('m-trucks').textContent = data.waste.trucks;
+  document.getElementById('m-bins').textContent = data.waste.full_bins;
+  document.getElementById('m-recycle').textContent = data.waste.recycling + '%';
+
+  document.getElementById('s-zones').textContent = data.waste.zones + ' / 10';
+  document.getElementById('s-trucks').textContent = data.waste.trucks;
+  document.getElementById('s-bins').textContent = data.waste.full_bins + ' bins';
+  document.getElementById('s-recycle').textContent = data.waste.recycling + '%';
+
+  renderBins(data.waste.full_bins);
+}
+
+fetchData();
+setInterval(fetchData, 5000);
+</script>
+</body>
+</html>

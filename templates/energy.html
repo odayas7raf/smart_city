@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart City — Energy</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f4f5f7; color: #1a1a1a; }
+.header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: #fff; border-bottom: 1px solid #e5e7eb; }
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon { width: 36px; height: 36px; border-radius: 8px; background: #1D9E75; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; }
+.logo-title { font-size: 16px; font-weight: 600; }
+.logo-sub { font-size: 12px; color: #6b7280; }
+.nav { display: flex; gap: 6px; padding: 0.75rem 1.5rem; background: #fff; border-bottom: 1px solid #e5e7eb; }
+.nav a { padding: 6px 16px; font-size: 13px; border-radius: 20px; border: 1px solid #e5e7eb; text-decoration: none; color: #6b7280; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+.nav a:hover { background: #f4f5f7; }
+.nav a.active { background: #1D9E75; color: #fff; border-color: #1D9E75; }
+.body { padding: 1.5rem; }
+.page-title { font-size: 20px; font-weight: 600; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 8px; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 1.5rem; }
+.metric-card { background: #fff; border-radius: 12px; padding: 1.25rem; border: 1px solid #e5e7eb; }
+.metric-label { font-size: 12px; color: #6b7280; margin-bottom: 8px; }
+.metric-value { font-size: 28px; font-weight: 700; }
+.metric-sub { font-size: 12px; color: #6b7280; margin-top: 4px; }
+.card { background: #fff; border-radius: 12px; padding: 1.25rem; border: 1px solid #e5e7eb; margin-bottom: 1rem; }
+.card-title { font-size: 14px; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 13px; }
+.bar-label { width: 120px; color: #6b7280; }
+.bar-track { flex: 1; height: 8px; background: #f4f5f7; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s; }
+.bar-val { width: 40px; text-align: right; font-weight: 600; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.stat-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f4f5f7; font-size: 13px; }
+.stat-row:last-child { border-bottom: none; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon"><i class="ti ti-building-skyscraper"></i></div>
+    <div>
+      <div class="logo-title">Smart City Connect</div>
+      <div class="logo-sub">Energy Department</div>
+    </div>
+  </div>
+  <a href="/logout" style="font-size:13px;color:#6b7280;text-decoration:none;"><i class="ti ti-logout"></i> Logout</a>
+</div>
+
+<div class="nav">
+  <a href="/"><i class="ti ti-layout-dashboard"></i> Overview</a>
+  <a href="/transport"><i class="ti ti-bus"></i> Transportation</a>
+  <a href="/energy" class="active"><i class="ti ti-bolt"></i> Energy</a>
+  <a href="/waste"><i class="ti ti-recycle"></i> Waste</a>
+  <a href="/safety"><i class="ti ti-shield"></i> Safety</a>
+</div>
+
+<div class="body">
+  <div class="page-title"><i class="ti ti-bolt" style="color:#1D9E75;font-size:22px;"></i> Energy Management</div>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Total Usage</div>
+      <div class="metric-value" id="m-energy">—</div>
+      <div class="metric-sub">Megawatts</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Solar Output</div>
+      <div class="metric-value" id="m-solar">—</div>
+      <div class="metric-sub">% of capacity</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Wind Output</div>
+      <div class="metric-value" id="m-wind">—</div>
+      <div class="metric-sub">% of capacity</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Grid Load</div>
+      <div class="metric-value" id="m-load">—</div>
+      <div class="metric-sub">% of max capacity</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-bar" style="color:#1D9E75;"></i> Energy Sources</div>
+      <div class="bar-row"><div class="bar-label">Solar</div><div class="bar-track"><div class="bar-fill" id="b-solar" style="background:#EF9F27;"></div></div><div class="bar-val" id="v-solar">—</div></div>
+      <div class="bar-row"><div class="bar-label">Wind</div><div class="bar-track"><div class="bar-fill" id="b-wind" style="background:#378ADD;"></div></div><div class="bar-val" id="v-wind">—</div></div>
+      <div class="bar-row"><div class="bar-label">Grid load</div><div class="bar-track"><div class="bar-fill" id="b-load" style="background:#1D9E75;"></div></div><div class="bar-val" id="v-load">—</div></div>
+      <div class="bar-row"><div class="bar-label">Street lights</div><div class="bar-track"><div class="bar-fill" id="b-lights" style="width:100%;background:#1D9E75;"></div></div><div class="bar-val">100%</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i class="ti ti-info-circle" style="color:#1D9E75;"></i> Grid Status</div>
+      <div class="stat-row"><div style="color:#6b7280;">Grid Status</div><div style="font-weight:600;color:#1D9E75;">Stable</div></div>
+      <div class="stat-row"><div style="color:#6b7280;">Street Lights</div><div style="font-weight:600;">100% Operational</div></div>
+      <div class="stat-row"><div style="color:#6b7280;">Renewable Share</div><div style="font-weight:600;" id="renewable">—</div></div>
+      <div class="stat-row"><div style="color:#6b7280;">Power Failures</div><div style="font-weight:600;color:#1D9E75;">None</div></div>
+      <div class="stat-row"><div style="color:#6b7280;">Last Updated</div><div style="font-weight:600;" id="last-update">just now</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function fetchData() {
+  const res = await fetch('/api/data');
+  const data = await res.json();
+
+  document.getElementById('m-energy').textContent = data.energy + ' MW';
+  document.getElementById('m-solar').textContent = data.energy_grid.solar + '%';
+  document.getElementById('m-wind').textContent = data.energy_grid.wind + '%';
+  document.getElementById('m-load').textContent = data.energy_grid.load + '%';
+
+  setBar('solar', data.energy_grid.solar, '#EF9F27');
+  setBar('wind', data.energy_grid.wind, '#378ADD');
+  setBar('load', data.energy_grid.load, '#1D9E75');
+
+  const renewable = data.energy_grid.solar + data.energy_grid.wind;
+  document.getElementById('renewable').textContent = Math.min(renewable, 100) + '%';
+  document.getElementById('last-update').textContent = 'just now';
+}
+
+function setBar(id, val, color) {
+  document.getElementById('b-' + id).style.width = val + '%';
+  document.getElementById('v-' + id).textContent = val + '%';
+}
+
+fetchData();
+setInterval(fetchData, 5000);
+</script>
+</body>
+</html>

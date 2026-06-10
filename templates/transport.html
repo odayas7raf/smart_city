@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart City — Transportation</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f4f5f7; color: #1a1a1a; }
+.header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: #fff; border-bottom: 1px solid #e5e7eb; }
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon { width: 36px; height: 36px; border-radius: 8px; background: #1D9E75; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; }
+.logo-title { font-size: 16px; font-weight: 600; }
+.logo-sub { font-size: 12px; color: #6b7280; }
+.nav { display: flex; gap: 6px; padding: 0.75rem 1.5rem; background: #fff; border-bottom: 1px solid #e5e7eb; }
+.nav a { padding: 6px 16px; font-size: 13px; border-radius: 20px; border: 1px solid #e5e7eb; text-decoration: none; color: #6b7280; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+.nav a:hover { background: #f4f5f7; }
+.nav a.active { background: #1D9E75; color: #fff; border-color: #1D9E75; }
+.body { padding: 1.5rem; }
+.page-title { font-size: 20px; font-weight: 600; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 8px; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 1.5rem; }
+.metric-card { background: #fff; border-radius: 12px; padding: 1.25rem; border: 1px solid #e5e7eb; }
+.metric-label { font-size: 12px; color: #6b7280; margin-bottom: 8px; }
+.metric-value { font-size: 28px; font-weight: 700; }
+.metric-sub { font-size: 12px; color: #6b7280; margin-top: 4px; }
+.card { background: #fff; border-radius: 12px; padding: 1.25rem; border: 1px solid #e5e7eb; margin-bottom: 1rem; }
+.card-title { font-size: 14px; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 13px; }
+.bar-label { width: 120px; color: #6b7280; }
+.bar-track { flex: 1; height: 8px; background: #f4f5f7; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s; }
+.bar-val { width: 40px; text-align: right; font-weight: 600; }
+.predict-box { background: #E8F5EE; border-radius: 12px; padding: 1.25rem; border: 1px solid #c3e6d4; }
+.predict-title { font-size: 14px; font-weight: 600; color: #1D9E75; margin-bottom: 0.5rem; }
+.predict-result { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+.predict-sub { font-size: 12px; color: #6b7280; margin-top: 4px; }
+.badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+.badge-ok { background: #E1F5EE; color: #0F6E56; }
+.badge-warn { background: #FAEEDA; color: #854F0B; }
+.badge-alert { background: #FAECE7; color: #993C1D; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon"><i class="ti ti-building-skyscraper"></i></div>
+    <div>
+      <div class="logo-title">Smart City Connect</div>
+      <div class="logo-sub">Transportation Department</div>
+    </div>
+  </div>
+  <a href="/logout" style="font-size:13px;color:#6b7280;text-decoration:none;"><i class="ti ti-logout"></i> Logout</a>
+</div>
+
+<div class="nav">
+  <a href="/"><i class="ti ti-layout-dashboard"></i> Overview</a>
+  <a href="/transport" class="active"><i class="ti ti-bus"></i> Transportation</a>
+  <a href="/energy"><i class="ti ti-bolt"></i> Energy</a>
+  <a href="/waste"><i class="ti ti-recycle"></i> Waste</a>
+  <a href="/safety"><i class="ti ti-shield"></i> Safety</a>
+</div>
+
+<div class="body">
+  <div class="page-title"><i class="ti ti-bus" style="color:#1D9E75;font-size:22px;"></i> Transportation Monitoring</div>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Active Vehicles</div>
+      <div class="metric-value" id="m-vehicles">—</div>
+      <div class="metric-sub">On roads right now</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Bus Lines On Time</div>
+      <div class="metric-value" id="m-bus">—</div>
+      <div class="metric-sub">% punctuality rate</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Metro Performance</div>
+      <div class="metric-value" id="m-metro">—</div>
+      <div class="metric-sub">% efficiency</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Parking Available</div>
+      <div class="metric-value" id="m-parking">—</div>
+      <div class="metric-sub">% spots free</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-chart-bar" style="color:#1D9E75;"></i> Traffic Status</div>
+      <div class="bar-row"><div class="bar-label">Bus lines</div><div class="bar-track"><div class="bar-fill" id="b-bus" style="background:#1D9E75;"></div></div><div class="bar-val" id="v-bus">—</div></div>
+      <div class="bar-row"><div class="bar-label">Metro</div><div class="bar-track"><div class="bar-fill" id="b-metro" style="background:#1D9E75;"></div></div><div class="bar-val" id="v-metro">—</div></div>
+      <div class="bar-row"><div class="bar-label">Traffic flow</div><div class="bar-track"><div class="bar-fill" id="b-traffic" style="background:#EF9F27;"></div></div><div class="bar-val" id="v-traffic">—</div></div>
+      <div class="bar-row"><div class="bar-label">Parking</div><div class="bar-track"><div class="bar-fill" id="b-parking" style="background:#D85A30;"></div></div><div class="bar-val" id="v-parking">—</div></div>
+    </div>
+
+    <div class="predict-box">
+      <div class="predict-title"><i class="ti ti-brain"></i> ML Traffic Prediction</div>
+      <div style="font-size:13px;color:#374151;margin-bottom:0.75rem;">Based on current vehicle count, our ML model predicts:</div>
+      <div class="predict-result" id="p-congestion">Loading...</div>
+      <div class="predict-sub" id="p-detail">Fetching prediction...</div>
+      <div style="margin-top:0.75rem;font-size:11px;color:#6b7280;">Model: Random Forest Classifier · Updated every 5s</div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function fetchData() {
+  const res = await fetch('/api/data');
+  const data = await res.json();
+
+  document.getElementById('m-vehicles').textContent = data.vehicles;
+  document.getElementById('m-bus').textContent = data.transport.bus + '%';
+  document.getElementById('m-metro').textContent = data.transport.metro + '%';
+  document.getElementById('m-parking').textContent = data.transport.parking + '%';
+
+  setBar('bus', data.transport.bus, data.transport.bus > 75 ? '#1D9E75' : '#EF9F27');
+  setBar('metro', data.transport.metro, '#1D9E75');
+  setBar('traffic', data.transport.traffic, data.transport.traffic > 70 ? '#1D9E75' : data.transport.traffic > 50 ? '#EF9F27' : '#D85A30');
+  setBar('parking', data.transport.parking, data.transport.parking > 60 ? '#1D9E75' : '#D85A30');
+}
+
+async function fetchPredict() {
+  const res = await fetch('/api/predict');
+  const data = await res.json();
+  const colors = { 'Low': '#1D9E75', 'Medium': '#EF9F27', 'High': '#D85A30' };
+  document.getElementById('p-congestion').textContent = data.predicted_congestion + ' Congestion';
+  document.getElementById('p-congestion').style.color = colors[data.predicted_congestion] || '#1a1a1a';
+  document.getElementById('p-detail').textContent = data.vehicles + ' vehicles detected · Hour: ' + data.hour + ':00';
+}
+
+function setBar(id, val, color) {
+  document.getElementById('b-' + id).style.width = val + '%';
+  document.getElementById('b-' + id).style.background = color;
+  document.getElementById('v-' + id).textContent = val + '%';
+}
+
+fetchData();
+fetchPredict();
+setInterval(fetchData, 5000);
+setInterval(fetchPredict, 5000);
+</script>
+</body>
+</html>
